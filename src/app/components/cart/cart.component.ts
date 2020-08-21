@@ -3,6 +3,7 @@ import { Order } from './../../models/order';
 import { Component, OnInit } from '@angular/core';
 import { CartItem } from 'src/app/models/cart-item';
 import { DatePipe } from '@angular/common';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-cart',
@@ -54,7 +55,7 @@ export class CartComponent implements OnInit {
     const order = new Order();
     order.id = this.generateUID(20);
     order.date = this.datePipe.transform(new Date(), 'yyyy-MM-ddTHH:mm:ss.SSS') + 'Z';
-    order.userEmail = 'vinicius@tolentinos.com';
+    order.userEmail = (JSON.parse(localStorage.getItem('user')) as User).email;
     order.value = this.getTotal();
     order.items = Object.assign({}, this.cartItems);
     // tslint:disable-next-line: only-arrow-functions
