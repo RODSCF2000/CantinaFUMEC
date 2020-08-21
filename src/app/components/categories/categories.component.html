@@ -1,0 +1,157 @@
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Categorias</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <button type="button" class="btn btn-success" style="width: 46px;" data-toggle="modal" data-target="#modal-adicionar"><i class="fas fa-plus"></i></button>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <div class="card">
+        <div class="card-body p-0">
+          <h6 *ngIf="categories != null ? categories.length == 0 : true" style="margin: 10px;">Não há categorias cadastradas.</h6>
+          <table class="table table-striped" *ngIf="categories != null ? categories.length > 0 : false">
+            <thead>
+              <tr>
+                <th style="width: 100px">Imagem</th>
+                <th>Título</th>
+                <th>Sub Título</th>
+                <th>Total Produtos</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let category of categories">
+                <td><img [src]="category.imagem" style="object-fit: cover; width: 125px; height: 75px;"></td>
+                <td style="vertical-align: middle;">{{category.cardTitle}}</td>
+                <td style="vertical-align: middle;">{{category.cardSubtitle}}</td>
+                <td style="vertical-align: middle;">{{category.menu.length}}</td>
+                <td style="vertical-align: middle;">
+                  <button type="button" class="btn btn-info" style="width: 46px;" data-toggle="modal" data-target="#modal-alterar" (click)="openModalAlterar(category)"><i class="fas fa-edit"></i></button>
+                  <button type="button" class="btn btn-danger" style="margin-left: 5px; width: 46px;" data-toggle="modal" data-target="#modal-excluir" (click)="openModalExcluir(category)"><i class="fas fa-trash-alt"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <div class="modal fade" id="modal-excluir" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Excluir Categoria</h4>
+          <button type="button" class="close" data-dismiss="modal" (click)="closeModalExcluir()" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Deseja realmente excluir a categoria?</p>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeModalExcluir()">Fechar</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="deleteCategory()">Excluir</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <div class="modal fade" id="modal-adicionar" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Adicionar Categoria</h4>
+          <button type="button" class="close" data-dismiss="modal" (click)="closeModalAdicionar()" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form [formGroup]="categoryForm">
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Título</label>
+              <input type="text" class="form-control" formControlName="cardTitle">
+            </div>
+            <div class="form-group">
+              <label>Sub Título</label>
+              <input type="text" class="form-control" formControlName="cardSubtitle">
+            </div>
+            <div class="form-group">
+              <label>File input</label>
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" (change)="onFileChange($event)" accept="image/*">
+                  <label class="custom-file-label">{{categoryForm.get('fileName').value}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeModalAdicionar()">Fechar</button>
+            <button type="button" class="btn btn-primary" [disabled]="!categoryForm.valid" (click)="getCategoriesByCardTitle(true)">Adicionar</button>
+          </div>
+        </form>
+        <a id="submitAdicionar" data-dismiss="modal" (click)="postCategory()"></a>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <div class="modal fade" id="modal-alterar" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Alterar Categoria</h4>
+          <button type="button" class="close" data-dismiss="modal" (click)="closeModalAlterar()" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form [formGroup]="categoryForm">
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Título</label>
+              <input type="text" class="form-control" formControlName="cardTitle">
+            </div>
+            <div class="form-group">
+              <label>Sub Título</label>
+              <input type="text" class="form-control" formControlName="cardSubtitle">
+            </div>
+            <div class="form-group">
+              <label>File input</label>
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" (change)="onFileChange($event)" accept="image/*">
+                  <label class="custom-file-label">{{categoryForm.get('fileName').value}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeModalAlterar()">Fechar</button>
+            <button type="button" class="btn btn-primary" [disabled]="!categoryForm.valid" (click)="getCategoriesByCardTitle(false)">Alterar</button>
+          </div>
+        </form>
+        <a id="submitAlterar" data-dismiss="modal" (click)="putCategory()"></a>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>

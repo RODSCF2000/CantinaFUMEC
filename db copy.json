@@ -1,0 +1,231 @@
+{
+  "category": [
+    {
+      "id": 1,
+      "cardTitle": "Sanduíche",
+      "cardSubtitle": "Sanduíches naturais",
+      "imagem": "assets/imgs/sanduiche-natural.jpg",
+      "menu": [
+        {
+          "id": "bread",
+          "imagePath": "assets/imgs/foods/bread.png",
+          "name": "Pão Artesanal Italiano",
+          "description": "Pão artesanal com queijos italianos",
+          "price": 15.9
+        },
+        {
+          "id": "burger",
+          "imagePath": "assets/imgs/foods/burger.png",
+          "name": "Classic Burger",
+          "description": "O clássico. Não tem como errar.",
+          "price": 18.5
+        },
+        {
+          "id": "fries",
+          "imagePath": "assets/imgs/foods/fries.png",
+          "name": "Batatas Fritas",
+          "description": "Batatas fritas crocantes",
+          "price": 5.5
+        },
+        {
+          "id": "greensandwich",
+          "imagePath": "assets/imgs/foods/greensandwich.png",
+          "name": "Sanduíche de Frango",
+          "description": "Frango grelhado e salada",
+          "price": 10.5
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "cardTitle": "Pães de Queijo",
+      "cardSubtitle": "Normal e Recheados",
+      "imagem": "assets/imgs/pao-queijo.jpg",
+      "menu": []
+    },
+    {
+      "id": 3,
+      "cardTitle": "Pizzas",
+      "cardSubtitle": "Com bordas e Sem bordas",
+      "imagem": "assets/imgs/pizza.jpg",
+      "menu": [
+        {
+          "id": "lasagna",
+          "imagePath": "assets/imgs/foods/zlasagna.png",
+          "name": "Lasagna de Zucchini",
+          "description": "Lasagna deliciosa que se salva por causa do queijo",
+          "price": 14.9
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "cardTitle": "Chinesa",
+      "cardSubtitle": "Quentes e Rolinhos",
+      "imagem": "assets/imgs/chinesa.jpg",
+      "menu": [
+        {
+          "id": "ceasar",
+          "imagePath": "assets/imgs/foods/ceasar.png",
+          "name": "Salada Ceasar",
+          "description": "Clássica salada ceasar.",
+          "price": 33.9
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "cardTitle": "Bebidas",
+      "cardSubtitle": "Sucos e Refrigerantes",
+      "imagem": "assets/imgs/suco.jpg",
+      "menu": [
+        {
+          "id": "coke",
+          "imagePath": "assets/imgs/foods/coke.png",
+          "name": "Refrigerante",
+          "description": "O refri mais gelado da cidade.",
+          "price": 4.5
+        },
+        {
+          "id": "capp",
+          "imagePath": "assets/imgs/foods/capp.png",
+          "name": "Cappuccino com Chantilly",
+          "description": "Tradicional cappuccino com chantilly",
+          "price": 9.9
+        },
+        {
+          "id": "espreso",
+          "imagePath": "assets/imgs/foods/espreso.png",
+          "name": "Super Espreso",
+          "description": "Café espresso duplo. ",
+          "price": 12.5
+        },
+        {
+          "id": "starb",
+          "imagePath": "assets/imgs/foods/starb.png",
+          "name": "Starbucks Copycat",
+          "description": "O mais pedido da casa. O verdadeiro café americano pura água.",
+          "price": 15.6
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "cardTitle": "Sobremesas",
+      "cardSubtitle": "Tortas e Doces",
+      "imagem": "assets/imgs/sobremesa.jpg",
+      "menu": [
+        {
+          "id": "cup-cake",
+          "imagePath": "assets/imgs/foods/cupcake.png",
+          "name": "Cup Cake",
+          "description": "Cup Cake recheado de Doce de Leite",
+          "price": 8.7
+        },
+        {
+          "id": "donut",
+          "imagePath": "assets/imgs/foods/donut.png",
+          "name": "Donut",
+          "description": "Coberto com chantilly",
+          "price": 2.5
+        },
+        {
+          "id": "sunday",
+          "imagePath": "assets/imgs/foods/sunday.png",
+          "name": "Mega Sunday",
+          "description": "Sunday com várias bolas de sorvete a sua escolha",
+          "price": 21.5
+        },
+        {
+          "id": "chocpop",
+          "imagePath": "assets/imgs/foods/chocpop.png",
+          "name": "Picolé de Brigadeiro",
+          "description": "Picolé de brigadeiro recheado com côco.",
+          "price": 8.5
+        },
+        {
+          "id": "icestd.png",
+          "imagePath": "assets/imgs/foods/icestd.png",
+          "name": "Sorvete Simples",
+          "description": "Clássico sorvete de rua onde todos os sabores são idênticos.",
+          "price": 1.5
+        },
+        {
+          "id": "cup",
+          "imagePath": "assets/imgs/foods/cup.png",
+          "name": "Cup Cake de Choc. Branco",
+          "description": "Cup Cake de chocolate branco",
+          "price": 5.5
+        },
+        {
+          "id": "straw",
+          "imagePath": "assets/imgs/foods/straw.png",
+          "name": "Bolo de Morango",
+          "description": "Bolo recheado e coberto com morangos",
+          "price": 40.5
+        },
+        {
+          "id": "cake",
+          "imagePath": "assets/imgs/foods/cake.png",
+          "name": "Fatia de Bolo",
+          "description": "Fatia de bolo de morango",
+          "price": 5.9
+        }
+      ]
+    }
+  ],
+  "ordersList": [
+    {
+      "id":"EraS7rbywDPC1d2HSD10",
+      "date":"2019-09-06T12:50:48.567Z",
+      "userEmail":"vinicius@tolentinos.com",
+      "value":28.1,
+      "items":[
+        {
+          "menuItem":{
+            "id":"cup-cake",
+            "description":"Cup Cake recheado de Doce de Leite",
+            "imagePath":"assets/imgs/foods/cupcake.png",
+            "name":"Cup Cake",
+            "price":8.7
+          },
+          "quantity":1
+        },
+        {
+          "menuItem":{
+            "id":"coke",
+            "description":"O refri mais gelado da cidade.",
+            "imagePath":"assets/imgs/foods/coke.png",
+            "name":"Refrigerante",
+            "price":4.5
+          },
+          "quantity":1
+        },
+        {
+          "menuItem":{
+            "id":"lasagna",
+            "description":"Lasagna deliciosa que se salva por causa do queijo",
+            "imagePath":"assets/imgs/foods/zlasagna.png",
+            "name":"Lasagna de Zucchini",
+            "price":14.9
+          },
+          "quantity":1
+        }
+      ]
+    }
+  ],
+  "users":[
+    {
+      "uid": "hUvH6neQnWPkwWL9zM4bcAwYspn2",
+      "id": 1,
+      "name": "Vinícius Tolentino",
+      "email": "vinicius@tolentinos.com",
+      "password": "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92",
+      "phoneNumber": "(xx) xxxxx-xxxx",
+      "photoUrl": "https://yt3.ggpht.com/a/AGF-l7-lMrFMc6BpALelxfEgJamXwG4LSQnumwnZng=s900-mo-c-c0xffffffff-rj-k-no",
+      "location": "Belo Horizonte",
+      "points": 0,
+      "settingsUser": { "language": "pt-br", "type": "client" }
+    }
+  ]
+}

@@ -1,0 +1,181 @@
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Produtos</h1>
+          </div>
+          <div class="col-sm-6">
+            <ol class="breadcrumb float-sm-right">
+              <button type="button" class="btn btn-success" style="width: 46px;" *ngIf="category != null" data-toggle="modal" data-target="#modal-adicionar"><i class="fas fa-plus"></i></button>
+            </ol>
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <div class="card">
+        <div class="card-header" style="min-height: 49px;">
+          <h3 class="card-title">{{category != null ? category.cardTitle : ''}}</h3>
+          <div class="card-tools" style="top: 0.30rem !important;">
+            <h5 style="float: left; line-height: 38px; margin-right: 5px;">Categoria</h5>
+            <select class="form-control" style="width: 200px;" (change)="onSelect($event.target.value)" id="select">
+              <option value="">
+                Selecione uma categoria
+              </option>
+              <option *ngFor="let cat of categories" [value]="cat | json" [selected]="cat.id==category?.id">
+                {{cat.cardTitle}}
+              </option>
+            </select>
+          </div>
+        </div>
+        <div class="card-body p-0">
+          <h6 *ngIf="category != null ? category.menu != null ? category.menu.length == 0 : true : false" style="margin: 10px;">Não há produtos cadastrados na categoria selecionada.</h6>
+          <h6 *ngIf="category != null ? false : true" style="margin: 10px;">Selecione a categoria para carregar os produtos.</h6>
+          <table class="table table-striped" *ngIf="category != null ? category.menu != null ? category.menu.length > 0 : false : false">
+            <thead>
+              <tr>
+                <th style="width: 100px">Imagem</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Preço</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let product of category?.menu">
+                <td><img [src]="product.imagePath" style="object-fit: cover; width: 125px; height: 75px;"></td>
+                <td style="vertical-align: middle;">{{product.name}}</td>
+                <td style="vertical-align: middle;">{{product.description}}</td>
+                <td style="vertical-align: middle;">{{(product.price | currency: 'BRL')}}</td>
+                <td style="vertical-align: middle;">
+                  <button type="button" class="btn btn-info" style="width: 46px;" data-toggle="modal" data-target="#modal-alterar" (click)="openModalAlterar(product)"><i class="fas fa-edit"></i></button>
+                  <button type="button" class="btn btn-danger" style="margin-left: 5px; width: 46px;" data-toggle="modal" data-target="#modal-excluir" (click)="openModalExcluir(product)"><i class="fas fa-trash-alt"></i></button>
+                  <button type="button" class="btn btn-success" style="margin-left: 5px; width: 46px;" (click)="adicionarCarrinho(product)"><i class="fas fa-shopping-cart"></i></button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+
+    </section>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+  <div class="modal fade" id="modal-excluir" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Excluir Produto</h4>
+          <button type="button" class="close" data-dismiss="modal" (click)="closeModalExcluir()" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Deseja realmente excluir o produto?</p>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeModalExcluir()">Fechar</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="deleteProduct()">Excluir</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <div class="modal fade" id="modal-adicionar" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Adicionar Produto</h4>
+          <button type="button" class="close" data-dismiss="modal" (click)="closeModalAdicionar()" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form [formGroup]="productForm">
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Nome</label>
+              <input type="text" class="form-control" formControlName="name">
+            </div>
+            <div class="form-group">
+              <label>Descrição</label>
+              <input type="text" class="form-control" formControlName="description">
+            </div>
+            <div class="form-group">
+              <label>Preço</label>
+              <input type="number" class="form-control" formControlName="price" min="0.01" step="0.01">
+            </div>
+            <div class="form-group">
+              <label>File input</label>
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" (change)="onFileChange($event)" accept="image/*">
+                  <label class="custom-file-label">{{productForm.get('fileName').value}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeModalAdicionar()">Fechar</button>
+            <button type="button" class="btn btn-primary" [disabled]="!productForm.valid" (click)="getProductsByName(true)">Adicionar</button>
+          </div>
+        </form>
+        <a id="submitAdicionar" data-dismiss="modal" (click)="postProduct()"></a>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <div class="modal fade" id="modal-alterar" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Alterar Produto</h4>
+          <button type="button" class="close" data-dismiss="modal" (click)="closeModalAlterar()" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <form [formGroup]="productForm">
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Nome</label>
+              <input type="text" class="form-control" formControlName="name">
+            </div>
+            <div class="form-group">
+              <label>Descrição</label>
+              <input type="text" class="form-control" formControlName="description">
+            </div>
+            <div class="form-group">
+              <label>Preço</label>
+              <input type="number" class="form-control" formControlName="price" min="0.01" step="0.01">
+            </div>
+            <div class="form-group">
+              <label>File input</label>
+              <div class="input-group">
+                <div class="custom-file">
+                  <input type="file" class="custom-file-input" (change)="onFileChange($event)" accept="image/*">
+                  <label class="custom-file-label">{{productForm.get('fileName').value}}</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer justify-content-between">
+            <button type="button" class="btn btn-default" data-dismiss="modal" (click)="closeModalAlterar()">Fechar</button>
+            <button type="button" class="btn btn-primary" [disabled]="!productForm.valid" (click)="getProductsByName(false)">Alterar</button>
+          </div>
+        </form>
+        <a id="submitAlterar" data-dismiss="modal" (click)="putProduct()"></a>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>

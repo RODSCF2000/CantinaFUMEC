@@ -1,0 +1,99 @@
+
+  <!-- Content Wrapper. Contains page content -->
+  <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-6">
+            <h1>Carrinho</h1>
+          </div>
+          <div class="col-sm-6">
+            <!-- <ol class="breadcrumb float-sm-right">
+              <button type="button" class="btn btn-success" style="width: 46px;"><i class="fas fa-plus"></i></button>
+            </ol> -->
+          </div>
+        </div>
+      </div><!-- /.container-fluid -->
+    </section>
+
+    <!-- Main content -->
+    <section class="content">
+
+      <div class="card">
+        <div class="card-body p-0">
+          <h6 *ngIf="cartItems != null ? cartItems.length == 0 : true" style="margin: 10px;">Não há items no carrinho.</h6>
+          <table class="table table-striped" *ngIf="cartItems != null ? cartItems.length > 0 : false">
+            <thead>
+              <tr>
+                <th>Imagem</th>
+                <th>Produto</th>
+                <th>Valor Unitário</th>
+                <th>Quantidade</th>
+                <th>Valor Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cartItem of cartItems">
+                <td><img [src]="cartItem.menuItem.imagePath" style="object-fit: cover; width: 125px; height: 75px;"></td>
+                <td style="line-height: 37.5px;"><span style="font-size: 24px;">{{cartItem.menuItem.name}}</span><br><i>{{cartItem.menuItem.description}}</i></td>
+                <td style="line-height: 75px;">{{(cartItem.menuItem.price | currency: 'BRL')}}</td>
+                <td style="line-height: 75px; vertical-align: middle;">
+                  <input type="number" class="form-control" [value]="cartItem.quantity" style="width: 80px; float: left;" step="0" min="0" max="1000" pattern= "[0-9]" onkeydown="javascript: event.preventDefault();" (change)="putQuantity(cartItem, $event.target.value)">
+                  <button type="button" class="btn btn-danger" style="margin-left: 5px; width: 46px; float: left;" (click)="putQuantity(cartItem, 0)"><i class="fas fa-trash-alt"></i></button>
+                </td>
+                <td style="line-height: 75px;">{{(cartItem.quantity * cartItem.menuItem.price | currency: 'BRL')}}</td>
+              </tr>
+            </tbody>
+            <tfoot>
+              <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th>{{(getTotal() | currency: 'BRL')}}</th>
+              </tr>
+            </tfoot>
+          </table>
+        </div>
+        <!-- /.card-body -->
+      </div>
+
+    </section>
+    <!-- /.content -->
+
+    <!-- Content Header (Page footer) -->
+    <section class="content-header">
+      <div class="container-fluid">
+        <div class="row mb-2">
+          <div class="col-sm-12">
+            <ol class="breadcrumb float-sm-right">
+              <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal-finalizar-compra" *ngIf="cartItems != null ? cartItems.length > 0 : false"><i class="fas fa-shopping-cart"></i> Finalizar Compra</button>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+  <!-- /.content-wrapper -->
+  <div class="modal fade" id="modal-finalizar-compra" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Finalizar Compra</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Deseja realmente finalizar a compra?</p>
+        </div>
+        <div class="modal-footer justify-content-between">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+          <button type="button" class="btn btn-primary" data-dismiss="modal" (click)="postOrder()">Finalizar</button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
